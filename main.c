@@ -41,7 +41,7 @@ int main(){
         }
 
         if(option == 2){
-
+            char password[255];
             FILE *passwords = fopen("password.txt", "a+");
 
             char siteName[255];
@@ -52,24 +52,49 @@ int main(){
             printf("Whats the email you registered with?: ");
             scanf("%s", email);
 
-            char password[255];
+            while (!emailCheck(email)){
+                printf("Invalid email...\n");
+                printf("Whats the email you registered with?: ");
+                scanf("%s", email);
+            }
+
+            if (emailCheck(email)){
+
             int genPass = 0;
             printf("Would you like to manually add the password [1] or generate one? [2]: ");
             scanf("%d", &genPass);
 
             if(genPass == 2){
-                printf("Generating a passowrd...");
+                int passLenght = 0;
+                printf("Please insert the lenght of the password: ");
+                scanf("%d", &passLenght);
+                printf("\nGenerating a passowrd...");
                 option = 0;
                 while (option != 1){
-                    passwordGenerator(password, 12);
-                    printf("\nHere's the generated password: %s", password);
-                    printf("\nWould you like to keep it [1] or to change it [2]: ");
-                    scanf("%d", &option);
+
+                    if(passLenght != 0){
+                        if(passLenght < 50 && passLenght > 8){
+                            passwordGenerator(password, passLenght);
+                            printf("Here's the generated password: %s", password);
+                            printf("\nWould you like to keep it [1] or to change it [2]: ");
+                            scanf("%d", &option);
+                        }else{
+                            if(passLenght > 50){
+                            printf("\nPlease insert a lenght of maximum 50.");
+                        }
+                        if(passLenght < 8){
+                            printf("\nFor security reasons the minimum lenght is 8.");
+                        }
+                        printf("\nPlease insert the lenght of the password: ");
+                        scanf("%d", &passLenght);
+                    }
+                    }
                 }
             }else{
                 printf("Insert the passowrd: ");
                 scanf("%s", password);
             }
+        }
 
             fprintf(passwords, "Site: %s\n", siteName);
             fprintf(passwords, "Email: %s\n", email);

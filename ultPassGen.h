@@ -23,3 +23,25 @@ void passwordGenerator(char password[], int lenght){
     generatedPassword[lenght] = '\0';
     strcpy(password, generatedPassword);
 }
+
+bool emailCheck(char *email){
+
+    bool FoundC = false, FoundP = false;
+    int i;
+
+    for(i = 0; email[i] != '\0'; i++){
+        if(email[i] == '@'){
+            FoundC = true;
+            break;
+        }
+    }
+
+    for(; email[i] != '\0'; i++){
+        if(email[i] == '.'){
+            FoundP = true;
+            break;
+        }
+    }
+
+    return FoundC && FoundP && email[i + 1] != '\0';
+}
