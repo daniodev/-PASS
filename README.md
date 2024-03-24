@@ -29,7 +29,7 @@ Follow these steps to compile and run the program:
 
  To simply run the code just run the `LinuxRun.bat`
 ```bash
-.\LinuxRun.bat
+./LinuxRun.sh
 ```
 2.1 **How to simply run the code: (Windows)**
 
