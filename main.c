@@ -1,4 +1,4 @@
-#include "ultPassGen.h"
+#include "Libraries/ultPassGen.h"
 
 int main(){
     printf(" /$$   /$$ /$$    /$$$$$$$$ /$$$$$$ /$$      /$$  /$$$$$$  /$$$$$$$$ /$$$$$$$$       /$$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$  /$$      /$$  /$$$$$$  /$$$$$$$  /$$$$$$$\n");
@@ -68,22 +68,22 @@ int main(){
                 int passLenght = 0;
                 printf("Please insert the lenght of the password: ");
                 scanf("%d", &passLenght);
-                printf("\nGenerating a passowrd...");
+                printf("Generating a passowrd...");
                 option = 0;
                 while (option != 1){
 
                     if(passLenght != 0){
-                        if(passLenght < 50 && passLenght > 8){
+                        if(passLenght <= checkInt("Max-pass-len") && passLenght >= checkInt("Min-pass-len")){
                             passwordGenerator(password, passLenght);
                             printf("Here's the generated password: %s", password);
                             printf("\nWould you like to keep it [1] or to change it [2]: ");
                             scanf("%d", &option);
                         }else{
-                            if(passLenght > 50){
-                            printf("\nPlease insert a lenght of maximum 50.");
+                            if(passLenght > checkInt("Max-pass-len")){
+                            printf("\nFor security reasons the maximum lenght is %d", checkInt("Max-pass-len"));
                         }
-                        if(passLenght < 8){
-                            printf("\nFor security reasons the minimum lenght is 8.");
+                        if(passLenght < checkInt("Min-pass-len")){
+                            printf("\nFor security reasons the minimum lenght is %d", checkInt("Min-pass-len"));
                         }
                         printf("\nPlease insert the lenght of the password: ");
                         scanf("%d", &passLenght);
@@ -104,6 +104,5 @@ int main(){
         }
         
     }
-
 
 }

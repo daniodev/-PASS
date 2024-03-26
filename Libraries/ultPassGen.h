@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <string.h>
+#include "yamlWatcher.h"
 
 void passwordGenerator(char password[], int lenght){
 
@@ -26,6 +27,8 @@ void passwordGenerator(char password[], int lenght){
 
 bool emailCheck(char *email){
 
+    if(checkBool("accurate-email-checker")){
+
     bool FoundC = false, FoundP = false;
     int i;
 
@@ -44,4 +47,7 @@ bool emailCheck(char *email){
     }
 
     return FoundC && FoundP && email[i + 1] != '\0';
+    }else{
+        return true;
+}
 }
