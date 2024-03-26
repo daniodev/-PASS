@@ -19,6 +19,7 @@ bool checkBool(const char *str) {
         char configKey[100];
         char value[100];
         if (sscanf(line, "%s = %s", configKey, value) == 2) {
+            if(strcmp(str, configKey) == 0){
             if (strcmp(value, "true") == 0) {
                 fclose(yml);
                 return true;
@@ -26,6 +27,7 @@ bool checkBool(const char *str) {
                     return false;
                 }else if(strcmp(value, "false") != 0 && strcmp(value, "true") != 0){
                     printf("\nValore nel file yaml non valido: %s, %s", key, value);
+            }
             }
         }
     }

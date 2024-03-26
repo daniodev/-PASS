@@ -4,13 +4,14 @@
 #include <time.h>
 #include <string.h>
 #include "yamlWatcher.h"
+#include "fileCrypter.h"
 
 void passwordGenerator(char password[], int lenght){
 
     time_t t;
     srand((unsigned) time(&t));
     char generatedPassword[lenght]; 
-    char caratteriSpeciali[12] = {'#', '@', '*', ']', '[', '.', ',', '-', '|', '%', '$', '/'};
+    char caratteriSpeciali[] = {'#', '@', '*', ']', '[', '.', ',', '-', '|', '%', '$', '/', '&', '!', '?', '(', ')', '{', '}', '<', '>', '^', '~', ':', ';', '+', '_', '`'};
 
     for(int i = 0; i < lenght; i++){
         if(rand() % 4 == 1){

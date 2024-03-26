@@ -10,22 +10,70 @@ int main(){
     printf("|  $$$$$$/| $$$$$$$$| $$    /$$$$$$| $$ \\/  | $$| $$  | $$   | $$   | $$$$$$$$      | $$      | $$  | $$|  $$$$$$/|  $$$$$$/| $$/   \\  $$|  $$$$$$/| $$  | $$| $$$$$$$/\n");
     printf(" \\______/ |________/|__/   |______/|__/     |__/|__/  |__/   |__/   |________/      |__/      |__/  |__/ \\______/  \\______/ |__/     \\__/ \\______/ |__/  |__/|_______/");
 
+    int pass = 0;
+    if(checkBool("file-crypting") == true){
+    FILE *passwords = fopen("password.txt", "r");
+    FILE *passwordsCrypted = fopen("CryptedPasswords.crypted", "r");
+
+    if(passwords != NULL && passwordsCrypted == NULL){
+        printf("\nYou didn't exited safely so your file isn't crypted anymore.. insert the key: ");
+        scanf("%d", &pass);
+    } 
+
+    if (passwordsCrypted != NULL && passwords == NULL) {
+        printf("\nPlease first insert the key to decrypt the file: ");
+        scanf("%d", &pass);
+        FileDecrypter("CryptedPasswords.crypted", "password.txt", pass);
+        fclose(passwordsCrypted);
+        remove("CryptedPasswords.crypted");
+    }
+
+    if (passwords == NULL && passwordsCrypted == NULL) {
+
+        printf("\nFirst start..., you will need to choose a password that you will always be asked to decrypt your file.");
+        printf("\nAdd it right here (note, for now the passwords are only alphanumeric.): ");
+        scanf("%d", &pass);
+        passwords = fopen("password.txt", "w");
+        fprintf(passwords, "# DECRYPT\n//DO NOT TOUCH THIS STRING FOR ANY REASON\n");
+        fclose(passwords);
+    }
+
+    if (passwordsCrypted != NULL && passwords == NULL) {
+        printf("\nPlease first insert the key to decrypt the file: ");
+        scanf("%d", &pass);
+        FileDecrypter("CryptedPasswords.crypted", "password.txt", pass);
+        fclose(passwordsCrypted);
+        remove("CryptedPasswords.crypted");
+    }
+
+    fclose(passwords);
+    fclose(passwordsCrypted);
+
+    }
+    FILE *passwordsCrypted = fopen("CryptedPasswords.crypted", "r");
+    if(checkBool("file-crypting") == false && passwordGenerator != NULL){
+        fclose(passwordsCrypted);
+        remove("CryptedPasswords.crypted");
+    }
+
+
     while(1){
 
         printf("\nWhat would you like to do: ");
         printf("\n[1] See my passowrds");
         printf("\n[2] Add a password");
         printf("\n[3] Edit a passowrd");
+        printf("\n[4] Safe Exit");
 
         int option = 0;
         printf("\nPlease provide a number: ");
         scanf("%d", &option);
 
-        if(option != 1 && option != 2 && option != 3){
+        if(option != 1 && option != 2 && option != 3 && option != 4){
             printf("Option not in list.");
         }
 
-        if(option == 0){
+        if(option == 0 || option == 4){
             break;
         }
 
@@ -68,7 +116,7 @@ int main(){
                 int passLenght = 0;
                 printf("Please insert the lenght of the password: ");
                 scanf("%d", &passLenght);
-                printf("Generating a passowrd...");
+                printf("Generating a passowrd...\n");
                 option = 0;
                 while (option != 1){
 
@@ -103,6 +151,10 @@ int main(){
             fclose(passwords);
         }
         
+    }
+    if(checkBool("file-crypting") == true){
+    fileEncrypter("password.txt", "CryptedPasswords.crypted", pass);
+    remove("password.txt");
     }
 
 }
