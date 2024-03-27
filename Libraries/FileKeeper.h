@@ -53,3 +53,43 @@ int checkInt(char *str) {
     fclose(yml);
     return 0;
 }
+
+
+bool findInFile(char *fName, char edString[]){
+    FILE *passwords = fopen(fName, "r");
+    char line[256];
+    while (fgets(line, sizeof(line), passwords) != NULL) {
+        char configKey[100];
+        char value[255];
+        if (sscanf(line, "Site: %[^\n]", value) == 1) {
+            if (strcmp(value, edString) == 0) {
+                fclose(passwords);
+                return true;
+            }
+        }
+    }
+    fclose(passwords);
+    printf("\n%s don't exists\n",edString);
+    return false;
+}
+
+bool editPass(char edString[], char *newPass){
+    FILE *passwords = fopen("password.txt", "r+");
+    char line[256];
+    long int position = -1;
+    while (fgets(line, sizeof(line), passwords) != NULL) {
+        position = ftell(passwords);
+        char value[255];
+        if (sscanf(line, "Site: %[^\n]", value) == 1) {
+            if (strcmp(value, edString) == 0) {
+                printf("\nPassword changed succesfully.\n");
+                fseek(passwords, position, SEEK_SET);
+                fprintf(passwords, "Password: %s\n", newPass);
+                fclose(passwords);
+                return true;
+            }
+        }
+    }
+    fclose(passwords);
+    return false;
+}

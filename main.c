@@ -34,16 +34,8 @@ int main(){
         printf("\nAdd it right here (note, for now the passwords are only alphanumeric.): ");
         scanf("%d", &pass);
         passwords = fopen("password.txt", "w");
-        fprintf(passwords, "# DECRYPT\n//DO NOT TOUCH THIS STRING FOR ANY REASON\n");
+        fprintf(passwords, "# DECRYPT\n//DO NOT TOUCH THIS STRING FOR ANY REASON\n\n");
         fclose(passwords);
-    }
-
-    if (passwordsCrypted != NULL && passwords == NULL) {
-        printf("\nPlease first insert the key to decrypt the file: ");
-        scanf("%d", &pass);
-        FileDecrypter("CryptedPasswords.crypted", "password.txt", pass);
-        fclose(passwordsCrypted);
-        remove("CryptedPasswords.crypted");
     }
 
     fclose(passwords);
@@ -51,18 +43,17 @@ int main(){
 
     }
     FILE *passwordsCrypted = fopen("CryptedPasswords.crypted", "r");
-    if(checkBool("file-crypting") == false && passwordGenerator != NULL){
-        fclose(passwordsCrypted);
+    if(checkBool("file-crypting") == false){
         remove("CryptedPasswords.crypted");
     }
-
+    fclose(passwordsCrypted);
 
     while(1){
 
         printf("\nWhat would you like to do: ");
-        printf("\n[1] See my passowrds");
+        printf("\n[1] See my passwords");
         printf("\n[2] Add a password");
-        printf("\n[3] Edit a passowrd");
+        printf("\n[3] Edit a passwrd");
         printf("\n[4] Safe Exit");
 
         int option = 0;
@@ -78,7 +69,7 @@ int main(){
         }
 
         if(option == 1){
-            printf("Here's the list of your passowrds!\n");
+            printf("Here's the list of your passwords!\n");
             FILE *passwords = fopen("password.txt", "a+");
             char allFile;
             while ((allFile = fgetc(passwords)) != EOF){
@@ -93,7 +84,7 @@ int main(){
             FILE *passwords = fopen("password.txt", "a+");
 
             char siteName[255];
-            printf("Whats the name of the site you want to add a passowrd?: ");
+            printf("Whats the name of the site you want to add a password?: ");
             scanf("%s", siteName);
 
             char email[255];
@@ -116,7 +107,7 @@ int main(){
                 int passLenght = 0;
                 printf("Please insert the lenght of the password: ");
                 scanf("%d", &passLenght);
-                printf("Generating a passowrd...\n");
+                printf("Generating a password...\n");
                 option = 0;
                 while (option != 1){
 
@@ -139,17 +130,37 @@ int main(){
                     }
                 }
             }else{
-                printf("Insert the passowrd: ");
+                printf("Insert the password: ");
                 scanf("%s", password);
             }
         }
 
-            fprintf(passwords, "Site: %s\n", siteName);
             fprintf(passwords, "Email: %s\n", email);
-            fprintf(passwords, "Passowrd: %s\n\n", password);
+            fprintf(passwords, "Site: %s\n", siteName);
+            fprintf(passwords, "Password: %s\n\n", password);
 
             fclose(passwords);
         }
+
+
+        if(option == 3){
+            FILE *passwords = fopen("password.txt", "r+");
+
+            char edSite[255];
+            printf("Whats the site you are searching to be edited?: ");
+            scanf("%s", edSite);
+            char newPass[255];
+            if(findInFile("password.txt", edSite)){
+                printf("Ok, insert the new password here: ");
+                scanf("%s", newPass);
+
+                editPass(edSite, newPass);
+
+            }
+
+            fclose(passwords);
+        }
+
         
     }
     if(checkBool("file-crypting") == true){
