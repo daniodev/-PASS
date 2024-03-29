@@ -1,4 +1,4 @@
-# Ultimate Password Generator
+# #PASS
 
 This program is designed to serve as a simple password management tool written in C. It offers functionalities to view, add, and potentially edit passwords stored in a file. The program utilizes a basic console interface for user interaction and leverages standard input/output operations for communication.
 
