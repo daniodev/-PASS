@@ -6,8 +6,8 @@ This program is designed to serve as a simple password management tool written i
 
 Copy and paste this command in you terminal:
    ```bash
-   git clone https://github.com/daniodev/Ultimate-password-generator
-   cd Ultimate-password-generator
+   git clone https://github.com/daniodev/#PASS
+   cd #PASS
    ```
    Finish reading the file below to run the program, or if you just know how to do it simply run the `bach` files.
 

@@ -1,7 +1,10 @@
 #ULTIMATE PASSOWRD GENERATOR CONFIG.YML! 
 #HERE YOU WILL BE ABLE TO SETUP MY PASSWORD GENERATOR!
 
+# All the possible values for now here are: en, it, fr, de
+lang = en
+
 file-crypting = true
-accurate-email-checker = false
+accurate-email-checker = true
 Max-pass-len = 50
 Min-pass-len = 8

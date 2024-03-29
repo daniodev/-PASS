@@ -1,41 +1,46 @@
 #include "Libraries/ultPassGen.h"
 
 int main(){
-    printf(" /$$   /$$ /$$    /$$$$$$$$ /$$$$$$ /$$      /$$  /$$$$$$  /$$$$$$$$ /$$$$$$$$       /$$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$  /$$      /$$  /$$$$$$  /$$$$$$$  /$$$$$$$\n");
-    printf("| $$  | $$| $$   |__  $$__/|_  $$_/| $$$    /$$$ /$$__  $$|__  $$__/| $$_____/      | $$__  $$ /$$__  $$ /$$__  $$ /$$__  $$| $$  /$ | $$ /$$__  $$| $$__  $$| $$__  $$\n");
-    printf("| $$  | $$| $$      | $$     | $$  | $$$$  /$$$$| $$  \\ $$   | $$   | $$            | $$  \\ $$| $$  \\ $$| $$  \\__/| $$  \\__/| $$ /$$$| $$| $$  \\ $$| $$  \\ $$| $$  \\ $$\n");
-    printf("| $$  | $$| $$      | $$     | $$  | $$ $$/$$ $$| $$$$$$$$   | $$   | $$$$$         | $$$$$$$/| $$$$$$$$|  $$$$$$ |  $$$$$$ | $$/$$ $$ $$| $$  | $$| $$$$$$$/| $$  | $$\n");
-    printf("| $$  | $$| $$      | $$     | $$  | $$  $$$| $$| $$__  $$   | $$   | $$__/         | $$____/ | $$__  $$ \\____  $$ \\____  $$| $$$$_  $$$$| $$  | $$| $$__  $$| $$  | $$\n");
-    printf("| $$  | $$| $$      | $$     | $$  | $$\\  $ | $$| $$  | $$   | $$   | $$            | $$      | $$  | $$ /$$  \\ $$ /$$  \\ $$| $$$/ \\  $$$| $$  | $$| $$  \\ $$| $$  | $$\n");
-    printf("|  $$$$$$/| $$$$$$$$| $$    /$$$$$$| $$ \\/  | $$| $$  | $$   | $$   | $$$$$$$$      | $$      | $$  | $$|  $$$$$$/|  $$$$$$/| $$/   \\  $$|  $$$$$$/| $$  | $$| $$$$$$$/\n");
-    printf(" \\______/ |________/|__/   |______/|__/     |__/|__/  |__/   |__/   |________/      |__/      |__/  |__/ \\______/  \\______/ |__/     \\__/ \\______/ |__/  |__/|_______/");
 
-    int pass = 0;
+    printf("   __  __    _______    ______    ______    ______  \n");
+    printf("  /  |/  |  /       \\  /      \\  /      \\  /      \\ \n");
+    printf(" _$$ |$$ |_ $$$$$$$  |/$$$$$$  |/$$$$$$  |/$$$$$$  |\n");
+    printf("/ $$  $$   |$$ |__$$ |$$ |__$$ |$$ \\__$$/ $$ \\__$$/ \n");
+    printf("$$$$$$$$$$/ $$    $$// $$    $$ |$$      \\ $$      \\ \n");
+    printf("/ $$  $$   |$$$$$$$/  $$$$$$$$ | $$$$$$  | $$$$$$  |\n");
+    printf("$$$$$$$$$$/ $$ |      $$ |  $$ |/  \\__$$ |/  \\__$$ |\n");
+    printf("  $$ |$$ |  $$ |      $$ |  $$ |$$    $$/ $$    $$/ \n");
+    printf("  $$/ $$/   $$/       $$/   $$/  $$$$$$/   $$$$$$/  \n");
+
+    char *pass;
     if(checkBool("file-crypting") == true){
     FILE *passwords = fopen("password.txt", "r");
     FILE *passwordsCrypted = fopen("CryptedPasswords.crypted", "r");
 
     if(passwords != NULL && passwordsCrypted == NULL){
-        printf("\nYou didn't exited safely so your file isn't crypted anymore.. insert the key: ");
-        scanf("%d", &pass);
+        printForLen("config.yml", "lang", "noSafeExit");
+        scanf("%s", pass);
     } 
 
     if (passwordsCrypted != NULL && passwords == NULL) {
-        printf("\nPlease first insert the key to decrypt the file: ");
-        scanf("%d", &pass);
+        printForLen("config.yml", "lang", "InSertKey");
+        scanf("%s", pass);
         FileDecrypter("CryptedPasswords.crypted", "password.txt", pass);
         fclose(passwordsCrypted);
         remove("CryptedPasswords.crypted");
     }
 
     if (passwords == NULL && passwordsCrypted == NULL) {
+        printForLen("config.yml", "lang", "FirstStart");
+        printForLen("config.yml", "lang", "AddItHere");
+        scanf("%s", pass);
 
-        printf("\nFirst start..., you will need to choose a password that you will always be asked to decrypt your file.");
-        printf("\nAdd it right here (note, for now the passwords are only alphanumeric.): ");
-        scanf("%d", &pass);
         passwords = fopen("password.txt", "w");
         fprintf(passwords, "# DECRYPT\n//DO NOT TOUCH THIS STRING FOR ANY REASON\n\n");
         fclose(passwords);
+
+
+
     }
 
     fclose(passwords);
@@ -48,20 +53,20 @@ int main(){
     }
     fclose(passwordsCrypted);
 
-    while(1){
 
-        printf("\nWhat would you like to do: ");
-        printf("\n[1] See my passwords");
-        printf("\n[2] Add a password");
-        printf("\n[3] Edit a passwrd");
-        printf("\n[4] Safe Exit");
+    while(1){
+        printForLen("config.yml", "lang", "WhatToDo");
+        printForLen("config.yml", "lang", "SeePasswords");
+        printForLen("config.yml", "lang", "AddPassword");
+        printForLen("config.yml", "lang", "EditPassword");
+        printForLen("config.yml", "lang", "SafeExit");
 
         int option = 0;
-        printf("\nPlease provide a number: ");
+        printForLen("config.yml", "lang", "ProvideNumber");
         scanf("%d", &option);
 
         if(option != 1 && option != 2 && option != 3 && option != 4){
-            printf("Option not in list.");
+            printForLen("config.yml", "lang", "OptionNotInList");
         }
 
         if(option == 0 || option == 4){
@@ -69,7 +74,7 @@ int main(){
         }
 
         if(option == 1){
-            printf("Here's the list of your passwords!\n");
+            printForLen("config.yml", "lang", "ListPasswords");
             FILE *passwords = fopen("password.txt", "a+");
             char allFile;
             while ((allFile = fgetc(passwords)) != EOF){
@@ -84,53 +89,56 @@ int main(){
             FILE *passwords = fopen("password.txt", "a+");
 
             char siteName[255];
-            printf("Whats the name of the site you want to add a password?: ");
+            printForLen("config.yml", "lang", "SiteName");
             scanf("%s", siteName);
 
             char email[255];
-            printf("Whats the email you registered with?: ");
+            printForLen("config.yml", "lang", "RegisteredEmail");
             scanf("%s", email);
 
             while (!emailCheck(email)){
-                printf("Invalid email...\n");
-                printf("Whats the email you registered with?: ");
+                printForLen("config.yml", "lang", "InvalidEmail");
+                printForLen("config.yml", "lang", "RegisteredEmail");
                 scanf("%s", email);
             }
 
             if (emailCheck(email)){
 
             int genPass = 0;
-            printf("Would you like to manually add the password [1] or generate one? [2]: ");
+            printForLen("config.yml", "lang", "ManualOrGenerate");
             scanf("%d", &genPass);
 
             if(genPass == 2){
                 int passLenght = 0;
-                printf("Please insert the lenght of the password: ");
+                printForLen("config.yml", "lang", "InsertLength");
                 scanf("%d", &passLenght);
-                printf("Generating a password...\n");
+                printForLen("config.yml", "lang", "GeneratingPassword");
                 option = 0;
                 while (option != 1){
 
                     if(passLenght != 0){
                         if(passLenght <= checkInt("Max-pass-len") && passLenght >= checkInt("Min-pass-len")){
                             passwordGenerator(password, passLenght);
-                            printf("Here's the generated password: %s", password);
-                            printf("\nWould you like to keep it [1] or to change it [2]: ");
+                            printForLen("config.yml", "lang", "GeneratedPassword");
+                            printf("%s", password);
+                            printForLen("config.yml", "lang", "KeepOrChange");
                             scanf("%d", &option);
                         }else{
                             if(passLenght > checkInt("Max-pass-len")){
-                            printf("\nFor security reasons the maximum lenght is %d", checkInt("Max-pass-len"));
+                            printForLen("config.yml", "lang", "MaxPasswordLength");
+                            printf("%d", checkInt("Max-pass-len"));
                         }
                         if(passLenght < checkInt("Min-pass-len")){
-                            printf("\nFor security reasons the minimum lenght is %d", checkInt("Min-pass-len"));
+                            printForLen("config.yml", "lang", "MinPasswordLength");
+                            printf("%d", checkInt("Min-pass-len"));
                         }
-                        printf("\nPlease insert the lenght of the password: ");
+                        printForLen("config.yml", "lang", "InsertLength");
                         scanf("%d", &passLenght);
                     }
                     }
                 }
             }else{
-                printf("Insert the password: ");
+                printForLen("config.yml", "lang", "InsertPassword");
                 scanf("%s", password);
             }
         }
@@ -147,15 +155,14 @@ int main(){
             FILE *passwords = fopen("password.txt", "r+");
 
             char edSite[255];
-            printf("Whats the site you are searching to be edited?: ");
+            printForLen("config.yml", "lang", "SiteToEdit");
             scanf("%s", edSite);
             char newPass[255];
             if(findInFile("password.txt", edSite)){
-                printf("Ok, insert the new password here: ");
+                printForLen("config.yml", "lang", "InsertNewPassword");
                 scanf("%s", newPass);
 
                 editPass(edSite, newPass);
-
             }
 
             fclose(passwords);
